@@ -6,6 +6,8 @@
                  background-color="rgb(48,65,86)"
                  text-color="#fff"
                  active-text-color="#ffd04b"
+                 :collapse-transition="false"
+                 :collapse="isCollapse"
         >
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>导航一</template>
@@ -56,13 +58,15 @@
       </el-aside>
 
       <el-container>
-        <el-header style="text-align: right; font-size: 12px">
+        <el-header style="border-bottom: 1px solid #ccc;line-height: 60px;display: flex">
+          <div style="flex: 1;font-size: 18px">
+            <span :class="collapseBtnClass" style="cursor: pointer" @click="collapse"></span>
+          </div>
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>新增</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
+              <el-dropdown-item>个人信息</el-dropdown-item>
+              <el-dropdown-item>退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <span>王小虎</span>
@@ -96,7 +100,24 @@ export default {
     };
     return{
       tableData: Array(12).fill(item),
-      msg:"Hello BookManager!"
+      msg:"Hello BookManager!",
+      isCollapse: false,
+      sideWidth:200,
+      collapseBtnClass: 'el-icon-s-fold'
+    }
+  },
+  methods:{
+    collapse() {  // 点击收缩按钮触发
+      this.isCollapse = !this.isCollapse
+      if (this.isCollapse) {  // 收缩
+        this.sideWidth = 64
+        this.collapseBtnClass = 'el-icon-s-unfold'
+        this.logoTextShow = false
+      } else {   // 展开
+        this.sideWidth = 200
+        this.collapseBtnClass = 'el-icon-s-fold'
+        this.logoTextShow = true
+      }
     }
   }
 }
